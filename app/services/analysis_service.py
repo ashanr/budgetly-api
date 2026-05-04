@@ -69,6 +69,13 @@ class AnalysisService:
             "total_expenses": sum(float(e.amount) for e in expenses),
         }
 
+    def _calculate_trend(self, months_data: list[float], monthly_avg: float) -> str:
+        if len(set(round(m, -2) for m in months_data)) <= 1:
+            return "stable"
+        if months_data and months_data[0] > monthly_avg:
+            return "increasing"
+        return "decreasing"
+
     async def forecast_spending(self, user_id: str) -> dict:
         today = date.today()
         months_data = []
@@ -89,5 +96,5 @@ class AnalysisService:
             "current_month_projection": current_month_projection,
             "year_end_projection": monthly_avg * 12,
             "savings_potential": max(0, monthly_avg * 0.15),
-            "trend": "stable" if len(set(round(m, -2) for m in months_data)) <= 1 else ("increasing" if months_data and months_data[0] > monthly_avg else "decreasing"),
+            "trend": self._calculate_trend(months_data, monthly_avg),
         }

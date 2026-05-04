@@ -46,15 +46,13 @@ async def export_json(
     return APIResponse.ok(data=data, message="Export generated")
 
 
-@router.get("/export/pdf/{user_id}", response_model=APIResponse)
+@router.get("/export/pdf/{user_id}")
 async def export_pdf(
     user_id: str,
     _current_user: str = Depends(get_current_user_id),
 ):
-    return APIResponse.ok(
-        data={"message": "PDF export is available when ReportLab is configured", "user_id": user_id},
-        message="PDF export endpoint ready",
-    )
+    from fastapi import Response
+    return Response(status_code=501, content='{"detail": "PDF export not yet implemented"}', media_type="application/json")
 
 
 @router.post("/import/{user_id}", response_model=APIResponse)

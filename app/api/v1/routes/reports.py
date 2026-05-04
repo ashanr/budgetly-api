@@ -32,6 +32,7 @@ async def get_summary(
         period_start=period_start,
         period_end=period_end,
         total_expenses=data["total_spent"],
+        # TODO: income tracking is not yet implemented; these are placeholder values
         total_income=0.0,
         net_savings=0.0,
         expense_count=data["expense_count"],
