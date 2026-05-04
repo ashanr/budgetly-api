@@ -72,7 +72,8 @@ class AnalysisService:
     def _calculate_trend(self, months_data: list[float], monthly_avg: float) -> str:
         if len(set(round(m, -2) for m in months_data)) <= 1:
             return "stable"
-        if months_data and months_data[0] > monthly_avg:
+        # months_data[0] is the most recent month; months_data[-1] is the oldest
+        if len(months_data) >= 2 and months_data[0] > months_data[-1]:
             return "increasing"
         return "decreasing"
 

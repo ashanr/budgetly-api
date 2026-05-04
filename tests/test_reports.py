@@ -31,6 +31,10 @@ async def test_monthly_report(client: AsyncClient):
         headers={"Authorization": f"Bearer {token}"},
     )
     assert response.status_code == 200
+    body = response.json()
+    assert body["success"] is True
+    assert "daily_breakdown" in body["data"]
+    assert "total_expenses" in body["data"]
 
 
 @pytest.mark.asyncio
@@ -41,6 +45,10 @@ async def test_category_report(client: AsyncClient):
         headers={"Authorization": f"Bearer {token}"},
     )
     assert response.status_code == 200
+    body = response.json()
+    assert body["success"] is True
+    assert "by_category" in body["data"]
+    assert "period_start" in body["data"]
 
 
 @pytest.mark.asyncio
